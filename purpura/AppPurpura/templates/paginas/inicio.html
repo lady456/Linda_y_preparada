@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+
+{% block titulo %} Inicio {% endblock %}
+
+{% block contenido %}
+
+<style>
+/* ================= SERVICIOS ================= */
+.service-card {
+    transition: all 0.3s ease;
+    height: 100%;
+    border: none;
+    border-radius: 18px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(168, 85, 247, 0.25);
+}
+
+.service-header {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: white;
+    padding: 17px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.service-list {
+    padding: 10px 0;
+}
+
+.service-list li {
+    padding: 12px;
+    border-bottom: 1px solid #f3f3f3;
+    color: #555;
+    text-align: center;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.service-list li:hover {
+    background: #faf7ff;
+}
+
+.service-list li:last-child {
+    border-bottom: none;
+}
+
+/* ================= FAQ ================= */
+
+/* Contenedor general */
+.faq-section {
+    background: #d8a6ee;
+    padding: 40px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Título */
+.titulo-faq {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* Contenedor interno */
+.faq-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Item */
+.faq-item {
+    background: #ffffff;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Hover más suave */
+.faq-item:hover {
+    transform: translateY(-2px);
+}
+
+/* Pregunta */
+.faq-question {
+    padding: 15px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #6d057a;
+    background: #ffe5ec;
+    border-radius: 12px;
+    transition: background 0.3s ease;
+}
+
+/* Hover pregunta */
+.faq-question:hover {
+    background: #ffc2d1;
+}
+
+/* Respuesta */
+.faq-answer {
+    padding: 15px 20px;
+    color: #555;
+    background: #fff;
+    border-top: 1px solid #f3d1dc;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Texto */
+.faq-answer p {
+    line-height: 1.6;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Quitar flecha por defecto */
+summary {
+    list-style: none;
+}
+
+/* Flecha personalizada */
+summary::after {
+    content: "➕";
+    float: right;
+    transition: transform 0.3s ease;
+}
+
+/* Cuando abre */
+details[open] summary::after {
+    content: "➖";
+}
+</style>
+
+<section class="py-5">
+    <div class="container">
+        <!-- SECCIÓN: QUIÉNES SOMOS -->
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold mb-3" style="color: var(--text-dark);">¿Quiénes somos?</h2>
+            <div class="mx-auto" style="width: 80px; height: 4px; background-color: var(--accent-vibrant); border-radius: 2px;"></div>
+        </div>
+        
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10">
+                <div class="p-4 p-md-5 rounded-4 shadow-sm" style="background-color: white; border-left: 6px solid var(--accent-vibrant);">
+                    <p class="lead text-center mb-4" style="color: #444; font-weight: 500;">
+                        En <strong>Linda y Preparada Púrpura</strong> somos un equipo de estilistas profesionales, especializadas en resaltar tu belleza natural.
+                    </p>
+                    <p style="text-align: justify; color: #666; line-height: 1.8; margin-bottom: 1.5rem;">
+                        Trabajamos con pasión, responsabilidad y productos de calidad para que tus manos, pies y rostro luzcan impecables. Somos tus aliadas de confianza, brindándote una experiencia cómoda, segura y personalizada.
+                    </p>
+                    <p class="text-center fst-italic mb-0" style="color: var(--text-dark); font-weight: 600; font-size: 1.1rem;">
+                        "Cuando te sientes linda, te sientes segura y preparada para conquistar el mundo." 
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: NUESTROS SERVICIOS -->
+        <h2 class="text-center mb-5 fw-bold" style="color: var(--text-dark);">Nuestros Servicios</h2>
+        
+        <div class="row g-4 justify-content-center">
+            <!-- Manicure -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="service-header">Manicure </div>
+                    <ul class="list-unstyled service-list m-0">
+                        <li>Sofgel</li>
+                        <li>Acrílicas</li>
+                        <li>Baño en acrílico</li>
+                        <li>Esmalte permanente / tradicional</li>
+                        <li>Limpieza básica</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Pedicure -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="service-header">Pedicure </div>
+                    <ul class="list-unstyled service-list m-0">
+                        <li>Baño en acrílico</li>
+                        <li>Esmalte permanente / tradicional</li>
+                        <li>Limpieza básica</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Depilación -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="service-header">Depilación </div>
+                    <ul class="list-unstyled service-list m-0">
+                        <li>Cejas</li>
+                        <li>Bozo</li>
+                        <li>Piernas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cejas -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="service-header">Cejas </div>
+                    <ul class="list-unstyled service-list m-0">
+                        <li>Pigmentación de Cejas</li>
+                        <li>Diseño y perfilado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="faq-section">
+    <h2 class="titulo-faq">Preguntas Frecuentes</h2>
+    
+    <div class="faq-container">
+        <!-- Pregunta 1 -->
+        <details class="faq-item">
+            <summary class="faq-question">¿Cómo puedo agendar una cita?</summary>
+            <div class="faq-answer">
+                <p>Puedes agendar una cita registrándote en nuestra plataforma y accediendo a la sección de "Agendar Cita" en tu panel de usuario.</p>
+            </div>
+        </details>
+
+        <!-- Pregunta 2 -->
+        <details class="faq-item">
+            <summary class="faq-question">¿Puedo cancelar o reprogramar mi cita?</summary>
+            <div class="faq-answer">
+                <p>Sí, puedes hacerlo desde la sección "Mis Citas" con al menos 24 horas de anticipación.</p>
+            </div>
+        </details>
+
+        <!-- Pregunta 3 -->
+        <details class="faq-item">
+            <summary class="faq-question">¿Qué métodos de pago aceptan?</summary>
+            <div class="faq-answer">
+                <p>Aceptamos tarjetas de crédito, débito y transferencias bancarias a través de nuestra pasarela de pagos segura.</p>
+            </div>
+        </details>
+
+        <!-- Pregunta 4 -->
+        <details class="faq-item">
+            <summary class="faq-question">¿Qué pasa si llego tarde a mi cita?</summary>
+            <div class="faq-answer">
+                <p>Te recomendamos llegar puntual. Si llegas tarde, es posible que debamos ajustar tu servicio o reprogramar la cita según disponibilidad.</p>
+                </div>
+        </details>
+
+        <!-- Pregunta 5 -->
+        <details class="faq-item">
+            <summary class="faq-question">¿Cuánto duran los servicios?</summary>
+            <div class="faq-answer">
+                <p><i>Manicure</i><br>
+                Tradicional: 30 – 40 minutos <br>
+                Semipermanente: 45 – 60 minutos <br>
+                Soft Gel: 1 hora – 1 hora 20 minutos <br>
+                Acrílico (extensiones): 1 hora 30 minutos – 2 horas <br>
+                Baño en acrílico: 1 hora – 1 hora 30 minutos<br>
+                <br>
+                <i>Pedicure</i><br>
+                Tradicional: 40 – 50 minutos<br>
+                Semipermanente: 50 – 70 minutos<br>
+                Acrílico en pies: 1 hora 20 minutos – 1 hora 40 minutos<br>
+                Baño en acrílico pies: 1 hora – 1 hora 20 minutos<br>
+                <br>
+                <i>Cejas</i><br>
+                Depilación con cera: 15 – 20 minutos<br>
+                Depilación con hilo: 20 – 30 minutos<br>
+                <br>
+                <i>Pestañas</i><br>
+                Punto a punto: 1 hora – 1 hora 30 minutos<br>
+                Pelo a pelo: 1 hora 30 minutos – 2 horas<br>
+                <br>
+                <i>Depilación corporal con cera</i><br>
+
+                <i>(El tiempo depende de la zona)</i><br>
+
+                Zona pequeña (bozo, axilas): 10 – 20 minutos<br>
+                Zona media (media pierna, brazos): 20 – 40 minutos<br>
+                Zona grande (pierna completa, espalda): 40 – 60 minutos<br>
+                Cuerpo completo: 1 hora 30 minutos – 2 horas 30 minutos<br>
+                </p>
+                </div>
+        </details>
+        <!-- Pregunta 6 -->
+        <details class="faq-item">
+            <summary class="faq-question">¿Qué técnicas utilizan en los servicios?</summary>
+            <div class="faq-answer">
+                <p>Manicure y pedicure:<br>
+                Trabajamos con técnicas como soft gel, acrílico, semipermanente, baño en acrílico y tradicional.<br>
+                <br>
+                Depilación:<br>
+                Utilizamos cera para todas las zonas del cuerpo.<br>
+                <br>
+                Cejas:<br>
+                Realizamos diseño y depilación con cera o hilo según tu preferencia.<br>
+                <br>
+                Pestañas:<br>
+                Aplicamos técnicas punto a punto y pelo a pelo.</p>
+                </div>
+        </details>
+        <!-- Pregunta 7 -->
+        <details class="faq-item">
+            <summary class="faq-question">¿Debo llegar antes de mi cita?</summary>
+            <div class="faq-answer">
+                <p>Sí, recomendamos llegar 5 a 10 minutos antes para garantizar una atención puntual.</p>
+                </div>
+        </details>
+        <!-- Pregunta 8 -->
+        <details class="faq-item">
+            <summary class="faq-question">¿Qué pasa si llego tarde o no asisto?</summary>
+            <div class="faq-answer">
+                <p>Si llegas tarde, tu servicio puede verse reducido o reprogramado. Las inasistencias sin aviso pueden afectar futuras reservas.</p>
+                </div>
+        </details>
+        <!-- Pregunta 9-->
+        <details class="faq-item">
+            <summary class="faq-question">¿Puedo cancelar o reprogramar?</summary>
+            <div class="faq-answer">
+                <p>Sí, puedes hacerlo con al menos 12 a 24 horas de anticipación.</p>
+                </div>
+        </details>
+        <!-- Pregunta 10 -->
+        <details class="faq-item">
+            <summary class="faq-question">¿Puedo cancelar o reprogramar?</summary>
+            <div class="faq-answer">
+                <p>Sí, puedes hacerlo con al menos 12 a 24 horas de anticipación.</p>
+                </div>
+        </details>
+        <!-- Pregunta 11 -->
+        <details class="faq-item">
+            <summary class="faq-question">¿Que metodos de pago aceptan?</summary>
+            <div class="faq-answer">
+                <p>Aceptamos efectivo, transferencias y pagos electrónicos.</p>
+                </div>
+        </details>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block pie %} {% endblock %}
+
+<script>
+
+document.addEventListener("DOMContentLoaded", ()=>{
+const nombre = localStorage.getItem("nombreUsuario");
+if(nombre){
+document.getElementById("saludoUsuario").textContent = "Hola " + nombre + ", qué gusto tenerte aquí 💜";
+}
+});
+</script>
