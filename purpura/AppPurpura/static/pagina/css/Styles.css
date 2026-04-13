@@ -21,7 +21,7 @@
     --bg-color: #E6E6FA; /* Morado claro (Lavender) */
     --primary-pastel: #d8b4fe; /* Un morado pastel medio */
     --accent-vibrant: #a855f7; /* Un morado más vibrante para acentos */
-    --text-dark: #8723d3; /* Un morado oscuro para texto, más suave que el negro */
+    --text-dark: #581c87; /* Un morado oscuro para texto, más suave que el negro */
     --white: #ffffff;
     --card-shadow: rgba(0, 0, 0, 0.08);
     --gradient-start: #c084fc;
@@ -212,50 +212,4 @@ img.spa {
 
 .h2l{
     color: var(--white);
-}
-.faq-section {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-}
-
-.titulo-faq {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-}
-
-.faq-item {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    padding: 15px;
-    transition: all 0.3s ease;
-}
-
-.faq-item[open] {
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.faq-question {
-    font-weight: bold;
-    cursor: pointer;
-    list-style: none; /* Quita la flecha por defecto en algunos navegadores */
-    outline: none;
-    color: #555;
-}
-
-.faq-question::-webkit-details-marker {
-    display: none; /* Quita la flecha en Chrome/Safari */
-}
-
-.faq-answer {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
-    color: #666;
-    line-height: 1.6;
 }

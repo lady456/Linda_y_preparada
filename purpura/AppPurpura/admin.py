@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Cita, PasswordResetCode
+from .models import registro
 
 # Register your models here.
-admin.site.register(Cita)
-admin.site.register(PasswordResetCode)
+admin.site.register(registro)
