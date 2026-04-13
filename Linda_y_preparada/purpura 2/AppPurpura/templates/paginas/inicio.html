@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block titulo %} Inicio {% endblock %}
+
+{% block contenido %}
+
+<style>
+    /* Estilos personalizados para las tarjetas de servicio */
+    .service-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        background-color: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(168, 85, 247, 0.2);
+    }
+    .service-header {
+        background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.3rem;
+    }
+    .service-list li {
+        padding: 10px 15px;
+        border-bottom: 1px solid #f0f0f0;
+        color: #555;
+        text-align: center;
+    }
+    .service-list li:last-child {
+        border-bottom: none;
+    }
+</style>
+
+<section class="py-5">
+    <div class="container">
+        <!-- SECCIÓN: QUIÉNES SOMOS -->
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold mb-3" style="color: var(--text-dark);">¿Quiénes somos? 💜</h2>
+            <div class="mx-auto" style="width: 80px; height: 4px; background-color: var(--accent-vibrant); border-radius: 2px;"></div>
+        </div>
+        
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10">
+                <div class="p-4 p-md-5 rounded-4 shadow-sm" style="background-color: white; border-left: 6px solid var(--accent-vibrant);">
+                    <p class="lead text-center mb-4" style="color: #444; font-weight: 500;">
+                        En <strong>Linda y Preparada Púrpura</strong> somos un equipo de estilistas profesionales, especializadas en resaltar tu belleza natural.
+                    </p>
+                    <p style="text-align: justify; color: #666; line-height: 1.8; margin-bottom: 1.5rem;">
+                        Trabajamos con pasión, responsabilidad y productos de calidad para que tus manos, pies y rostro luzcan impecables. Somos tus aliadas de confianza, brindándote una experiencia cómoda, segura y personalizada.
+                    </p>
+                    <p class="text-center fst-italic mb-0" style="color: var(--text-dark); font-weight: 600; font-size: 1.1rem;">
+                        "Cuando te sientes linda, te sientes segura y preparada para conquistar el mundo." 💅✨
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: NUESTROS SERVICIOS -->
+        <h2 class="text-center mb-5 fw-bold" style="color: var(--text-dark);">Nuestros Servicios</h2>
+        
+        <div class="row g-4 justify-content-center">
+            <!-- Manicure -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="service-header">Manicure 💅</div>
+                    <ul class="list-unstyled service-list m-0">
+                        <li>Sofgel</li>
+                        <li>Acrílicas</li>
+                        <li>Baño en acrílico</li>
+                        <li>Esmalte permanente / tradicional</li>
+                        <li>Limpieza básica</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Pedicure -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="service-header">Pedicure 🦶</div>
+                    <ul class="list-unstyled service-list m-0">
+                        <li>Baño en acrílico</li>
+                        <li>Esmalte permanente / tradicional</li>
+                        <li>Limpieza básica</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Depilación -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="service-header">Depilación 🍯</div>
+                    <ul class="list-unstyled service-list m-0">
+                        <li>Cejas</li>
+                        <li>Bozo</li>
+                        <li>Piernas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cejas -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="service-header">Cejas 👁️</div>
+                    <ul class="list-unstyled service-list m-0">
+                        <li>Pigmentación de Cejas</li>
+                        <li>Diseño y perfilado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block pie %} {% endblock %}
+
+<script>
+
+document.addEventListener("DOMContentLoaded", ()=>{
+const nombre = localStorage.getItem("nombreUsuario");
+if(nombre){
+document.getElementById("saludoUsuario").textContent = "Hola " + nombre + ", qué gusto tenerte aquí 💜";
+}
+});
+</script>

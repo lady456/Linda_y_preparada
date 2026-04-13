@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %} Citas {% endblock %}
+
+{% block contenido %} 
+<body>
+<nav class="menu"></nav>
+<div class="logo"></div>
+<div class="card">
+
+
+<h2>Agendar Cita</h2>
+<label>Servicio</label>
+<select id="servicio">
+    <option value="manicure">Manicure</option>
+    <option value="pedicure">Pedicure</option>
+    <option value="Pigmentación de cejas">Pigmentación de cejas</option>
+    <option value="Depilación">Depilación</option>
+</select>
+<label>Profesional</label>
+<select id="profesional">
+    <option>Camila</option>
+    <option>Lorena</option>
+    <option>Stefany</option>
+    <option>Clara</option>
+    <option>Heidy</option>
+</select>
+<label>Fecha</label>
+<input type="date" id="fecha" style="border: 1px solid var(--accent-vibrant); color: var(--text-dark); accent-color: var(--accent-vibrant);">
+<label>Hora</label>
+<select id="hora" style="border: 1px solid var(--accent-vibrant); color: var(--text-dark);">
+    <option value="07:00">7:00 AM</option>
+    <option value="08:00">8:00 AM</option>
+    <option value="09:00">9:00 AM</option>
+    <option value="10:00">10:00 AM</option>
+    <option value="11:00">11:00 AM</option>
+    <option value="12:00">12:00 PM</option>
+    <option value="13:00">1:00 PM</option>
+    <option value="14:00">2:00 PM</option>
+    <option value="15:00">3:00 PM</option>
+    <option value="16:00">4:00 PM</option>
+    <option value="17:00">5:00 PM</option>
+</select>
+
+<script>
+    const fechaInput = document.getElementById('fecha');
+    const hoy = new Date();
+    const anio = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoy.getDate()).padStart(2, '0');
+    
+    // Configurar límites: desde hoy hasta fin de mes
+    fechaInput.min = `${anio}-${mes}-${dia}`;
+    fechaInput.max = `${anio}-${mes}-${new Date(anio, hoy.getMonth() + 1, 0).getDate()}`;
+</script>
+<br>
+<button onclick="guardarCita()">Confirmar</button>
+</div>
+{% endblock %}
+
+{% block pie %} {% endblock %}

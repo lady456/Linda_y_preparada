@@ -1,0 +1,25 @@
+
+{% csrf_token %}
+
+
+
+{% for campo in form %}
+
+<div class="mb-3">
+    <label for="" class="form-label">{{campo.label}}</label>
+    <input
+        type="{{ campo.field.widget.input_type }}"
+        name="{{ campo.name }}"
+        id=""
+        class="form-control"
+        placeholder="{{ campo.label }}"
+        value="{{ campo.value|default:'' }}"
+        aria-describedby="helpId"
+    />
+</div>
+{% endfor %}
+
+
+        <a class="btn btn-light w-100 mt-2" href="{% url 'login' %}" role="button">Registrarse</a>
+        <a class="btn btn-light w-100 mt-2" href="{% url 'inicio' %}" role="button">Cancelar</a>
+</div>
