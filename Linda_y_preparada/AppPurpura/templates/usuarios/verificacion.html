@@ -1,0 +1,184 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Verificación de Cuenta {% endblock %}
+
+{% block contenido %}
+<h1>Verificar datos</h1>
+
+<style>
+/* Estilos específicos para la tarjeta de verificación */
+.verification-container {
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 40px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+    }
+
+.titulo-verificacion {
+        color: var(--text-dark);
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+.subtitulo {
+        color: #6b7280;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+    }
+
+.btn-opcion {
+        background-color: white;
+        color: var(--text-dark);
+        border: 2px solid #e9d5ff;
+        padding: 15px;
+        border-radius: 10px;
+        width: 100%;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+.btn-opcion:hover {
+        border-color: var(--accent-vibrant);
+        background-color: #faf5ff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(168, 85, 247, 0.1);
+    }
+
+.input-codigo {
+        font-size: 1.5rem;
+        letter-spacing: 0.5rem;
+        text-align: center;
+        font-weight: bold;
+        color: var(--text-dark);
+        border: 2px solid #e9d5ff;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    
+.input-codigo:focus {
+        border-color: var(--accent-vibrant);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+    }
+
+.hidden { display: none; }
+.resend-box {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #faf5ff;
+        border-radius: 8px;
+        border: 1px dashed #e9d5ff;
+    }
+</style>
+
+<div class="verification-container">
+    <!-- FASE 1: Selección del método de envío -->
+    <div id="fase-seleccion">
+        <h2 class="titulo-verificacion">Verificación de Seguridad 🔐</h2>
+        <p class="subtitulo">Selecciona dónde deseas recibir tu código de verificación de 6 dígitos.</p>
+        <button class="btn-opcion" onclick="enviarCodigo('email')">
+            📧 Enviar a mi Correo
+        </button>
+
+        <button class="btn-opcion" onclick="enviarCodigo('sms')">
+            📱 Enviar a mi Celular
+        </button>
+    </div>
+
+    <!-- FASE 2: Ingreso del código -->
+    <div id="fase-codigo" class="hidden">
+        <h2 class="titulo-verificacion">Ingresa el Código</h2>
+        <p id="mensaje-envio" class="subtitulo"></p>
+
+        <!-- Al verificar, mandamos al usuario al login -->
+        <form action="{% url 'login' %}" method="get">
+            <input type="text" name="codigo" class="input-codigo" maxlength="6" placeholder="000000" required pattern="[0-9]{6}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            
+            <button type="submit">VERIFICAR CÓDIGO</button>
+        </form>
+
+        <!-- Temporizador -->
+        <div id="area-temporizador" style="margin-top: 20px; color: #6b7280; font-size: 0.9rem;">
+            Podrás reenviar el código en <span id="cuenta-regresiva" style="font-weight: bold; color: var(--accent-vibrant);">02:00</span>
+        </div>
+
+        <!-- Opción de Reenvío (Oculta hasta que pasen 2 min) -->
+        <div id="area-reenvio" class="resend-box hidden">
+            <p style="margin-bottom: 10px; font-weight: 500; color: var(--text-dark);">¿No recibiste el código?</p>
+            <button type="button" onclick="reenviarCodigo()" style="background: white; color: var(--accent-vibrant); border: 1px solid var(--accent-vibrant); padding: 8px 15px; border-radius: 20px; font-size: 0.85rem; width: auto;">
+                Reenviar Código Nuevo
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let timerInterval;
+    function enviarCodigo(metodo) {
+
+        // Cambiar de vista
+        document.getElementById('fase-seleccion').classList.add('hidden');
+        document.getElementById('fase-codigo').classList.remove('hidden');
+
+        // Mostrar mensaje personalizado según la opción
+        const mensaje = metodo === 'email' 
+            ? 'Hemos enviado un código de 6 dígitos a tu correo electrónico.' 
+            : 'Hemos enviado un código de 6 dígitos a tu celular vía SMS.';
+        document.getElementById('mensaje-envio').textContent = mensaje;
+
+        // Iniciar temporizador de 2 minutos (120 segundos)
+        iniciarTemporizador(120);
+    }
+
+    function iniciarTemporizador(duracionSegundos) {
+        let timer = duracionSegundos;
+        const display = document.getElementById('cuenta-regresiva');
+        const areaReenvio = document.getElementById('area-reenvio');
+        const areaTemporizador = document.getElementById('area-temporizador');
+
+        // Estado inicial del timer
+        areaReenvio.classList.add('hidden');
+        areaTemporizador.classList.remove('hidden');
+
+        clearInterval(timerInterval); // Limpiar cualquier intervalo previo
+
+        timerInterval = setInterval(function () {
+            let minutos = parseInt(timer / 60, 10);
+            let segundos = parseInt(timer % 60, 10);
+
+            minutos = minutos < 10 ? "0" + minutos : minutos;
+            segundos = segundos < 10 ? "0" + segundos : segundos;
+
+            display.textContent = minutos + ":" + segundos;
+
+            if (--timer < 0) {
+                clearInterval(timerInterval);
+                // Tiempo terminado: mostrar opción de reenvío
+                areaTemporizador.classList.add('hidden');
+                areaReenvio.classList.remove('hidden');
+            }
+        }, 1000);
+    }
+
+    function reenviarCodigo() {
+        alert('¡Código reenviado con éxito! 💜');
+       // Reiniciar el timer
+        iniciarTemporizador(120);
+    }
+</script>
+
+{% endblock %}
