@@ -5,59 +5,262 @@
 {% block titulo %} Citas {% endblock %}
 
 {% block contenido %} 
-<body>
-<nav class="menu"></nav>
-<div class="logo"></div>
-<div class="card">
+<div class="contenedor-citas">
+    <div class="card-cita">
+        <h2>Agendar Cita</h2>
+        <form method="post" id="citasForm">
+            {% csrf_token %}
+            <div class="formulario">
+                <!-- Servicio -->
+                <div class="form-group">
+                    <label for="{{ form.servicio.id_for_label }}">{{ form.servicio.label }}</label>
+                    {{ form.servicio }}
+                    {% if form.servicio.errors %}
+                        <span class="error">{{ form.servicio.errors.0 }}</span>
+                    {% endif %}
+                </div>
 
+                <!-- Profesional -->
+                <div class="form-group">
+                    <label for="{{ form.profesional.id_for_label }}">{{ form.profesional.label }}</label>
+                    {{ form.profesional }}
+                    {% if form.profesional.errors %}
+                        <span class="error">{{ form.profesional.errors.0 }}</span>
+                    {% endif %}
+                </div>
 
-<h2>Agendar Cita</h2>
-<label>Servicio</label>
-<select id="servicio">
-    <option value="manicure">Manicure</option>
-    <option value="pedicure">Pedicure</option>
-    <option value="Pigmentación de cejas">Pigmentación de cejas</option>
-    <option value="Depilación">Depilación</option>
-</select>
-<label>Profesional</label>
-<select id="profesional">
-    <option>Camila</option>
-    <option>Lorena</option>
-    <option>Stefany</option>
-    <option>Clara</option>
-    <option>Heidy</option>
-</select>
-<label>Fecha</label>
-<input type="date" id="fecha" style="border: 1px solid var(--accent-vibrant); color: var(--text-dark); accent-color: var(--accent-vibrant);">
-<label>Hora</label>
-<select id="hora" style="border: 1px solid var(--accent-vibrant); color: var(--text-dark);">
-    <option value="07:00">7:00 AM</option>
-    <option value="08:00">8:00 AM</option>
-    <option value="09:00">9:00 AM</option>
-    <option value="10:00">10:00 AM</option>
-    <option value="11:00">11:00 AM</option>
-    <option value="12:00">12:00 PM</option>
-    <option value="13:00">1:00 PM</option>
-    <option value="14:00">2:00 PM</option>
-    <option value="15:00">3:00 PM</option>
-    <option value="16:00">4:00 PM</option>
-    <option value="17:00">5:00 PM</option>
-</select>
+                <!-- Fecha -->
+                <div class="form-group">
+                    <label for="{{ form.fecha.id_for_label }}">{{ form.fecha.label }}</label>
+                    {{ form.fecha }}
+                    {% if form.fecha.errors %}
+                        <span class="error">{{ form.fecha.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Hora - Dinámico -->
+                <div class="form-group">
+                    <label for="horaSelect">Hora disponible</label>
+                    <select id="horaSelect" name="hora" required>
+                        <option value="">-- Selecciona profesional y fecha primero --</option>
+                    </select>
+                    <div id="horaLoading" style="display:none; color: #6a11cb; font-size: 0.9em;">
+                        Cargando horas disponibles...
+                    </div>
+                    {% if form.hora.errors %}
+                        <span class="error">{{ form.hora.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Mensajes de error general -->
+                {% if form.non_field_errors %}
+                    <div class="error-box">
+                        {% for error in form.non_field_errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn-cita">Confirmar Cita</button>
+        </form>
+    </div>
+</div>
+
+<style>
+/* Fondo con degradado */
+.contenedor-citas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+    padding: 20px;
+    background: linear-gradient(135deg, #ffffff, #f8f7fa);
+}
+
+/* Tarjeta */
+.card-cita {
+    background: white;
+    padding: 40px;
+    width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.79);
+    text-align: center;
+    animation: aparecer 1s ease;
+}
+
+/* Animación entrada */
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Título */
+.card-cita h2 {
+    margin-bottom: 20px;
+    color: #6a11cb;
+}
+
+/* Grupos de formulario */
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+.formulario p {
+    text-align: left;
+}
+
+/* Inputs */
+.formulario input,
+.formulario select,
+.formulario textarea,
+#horaSelect {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+/* Efecto focus */
+.formulario input:focus,
+.formulario select:focus,
+.formulario textarea:focus,
+#horaSelect:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 10px rgba(106, 17, 203, 0.3);
+    outline: none;
+}
+
+/* Errores */
+.error {
+    color: #dc3545;
+    font-size: 0.85em;
+    margin-top: 5px;
+    display: block;
+}
+
+.error-box {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+/* Botón */
+.btn-cita {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #b982f3, #ad25fc);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover del botón */
+.btn-cita:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(106, 17, 203, 0.4);
+}
+
+.btn-cita:active {
+    transform: translateY(-1px);
+}
+</style>
 
 <script>
-    const fechaInput = document.getElementById('fecha');
-    const hoy = new Date();
-    const anio = hoy.getFullYear();
-    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-    const dia = String(hoy.getDate()).padStart(2, '0');
+document.addEventListener('DOMContentLoaded', function() {
+    const profesionalSelect = document.getElementById('id_profesional');
+    const fechaInput = document.getElementById('id_fecha');
+    const horaSelect = document.getElementById('horaSelect');
+    const horaLoading = document.getElementById('horaLoading');
     
-    // Configurar límites: desde hoy hasta fin de mes
-    fechaInput.min = `${anio}-${mes}-${dia}`;
-    fechaInput.max = `${anio}-${mes}-${new Date(anio, hoy.getMonth() + 1, 0).getDate()}`;
-</script>
-<br>
-<button onclick="guardarCita()">Confirmar</button>
-</div>
-{% endblock %}
+    // URL del API - Usando Django URL reversing desde el cliente
+    const apiUrl = "{% url 'obtener_horas_disponibles' %}";
 
-{% block pie %} {% endblock %}
+    // Función para cargar horas disponibles
+    function cargarHorasDisponibles() {
+        const profesional = profesionalSelect.value;
+        const fecha = fechaInput.value;
+
+        // Limpiar opciones anteriores
+        horaSelect.innerHTML = '<option value="">-- Selecciona profesional y fecha primero --</option>';
+
+        if (!profesional || !fecha) {
+            horaLoading.style.display = 'none';
+            return;
+        }
+
+        horaLoading.style.display = 'block';
+
+        // Hacer petición AJAX
+        const url = `${apiUrl}?profesional=${encodeURIComponent(profesional)}&fecha=${fecha}`;
+        console.log('Solicitando horas a:', url);
+        
+        fetch(url)
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Datos recibidos:', data);
+                horaLoading.style.display = 'none';
+                
+                if (data.error) {
+                    console.error('Error del servidor:', data.error);
+                    horaSelect.innerHTML = '<option value="">Error: ' + data.error + '</option>';
+                    return;
+                }
+
+                if (data.horas.length === 0) {
+                    horaSelect.innerHTML = '<option value="">No hay horas disponibles para esta fecha</option>';
+                    return;
+                }
+
+                // Agregar opciones de horas disponibles
+                horaSelect.innerHTML = '<option value="">-- Selecciona una hora --</option>';
+                data.horas.forEach(hora => {
+                    const option = document.createElement('option');
+                    option.value = hora;
+                    option.textContent = hora;
+                    horaSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                horaLoading.style.display = 'none';
+                console.error('Error en fetch:', error);
+                horaSelect.innerHTML = '<option value="">Error al cargar horas: ' + error.message + '</option>';
+            });
+    }
+
+    // Escuchar cambios en profesional y fecha
+    profesionalSelect.addEventListener('change', cargarHorasDisponibles);
+    fechaInput.addEventListener('change', cargarHorasDisponibles);
+
+    // Cargar horas si ya existen valores (en caso de error de validación)
+    if (profesionalSelect.value && fechaInput.value) {
+        cargarHorasDisponibles();
+    }
+});
+</script>
+{% endblock %}

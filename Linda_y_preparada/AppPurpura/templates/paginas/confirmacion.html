@@ -1,25 +1,45 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
-{% block titulo %} Confirmacion de Cita {% endblock %}
+{% block titulo %} Confirmación de Cita {% endblock %}
 
-{% block contenido %} 
-<link rel="icon" href="img/logo.png.jpg" type="image/png"> 
-<link rel="stylesheet" href="Css/style.css">
-<script defer src="js/confirmacion.js"></script>
-</head>
-<body>
-<nav class="menu"><div class="logo">PÚRPURA</div></nav>
-<div class="card">
-<h2>✨ ¡Cita Confirmada!</h2>
-<div id="resumenCita"></div>
-<p class="mensajeCorreo">📧 Te llegará un correo con los detalles de tu cita.</p>
+{% block contenido %}
+
+<link rel="stylesheet" href="{% static 'Css/style.css' %}">
+
+<nav class="menu">
+    <div class="logo"></div>
+</nav>
+
+<div class="card" style="text-align:center; padding:30px;">
+
+    <h2 style="color: #7b2cbf;">✨ ¡Cita Confirmada!</h2>
+
+    <p style="margin-bottom:20px;">Tu cita ha sido agendada con éxito 💜</p>
+
+    <!-- RESUMEN -->
+    <div style="background:#f8f0ff; padding:20px; border-radius:10px; margin-bottom:20px;">
+        <h3> Resumen de tu cita</h3>
+        <p><strong> Servicio:</strong> {{ servicio }}</p>
+        <p><strong> Fecha:</strong> {{ fecha }}</p>
+        <p><strong> Hora:</strong> {{ hora }}</p>
+    </div>
+
+    <p class="mensajeCorreo">
+        📧 Te hemos enviado un correo con los detalles de tu cita.
+    </p>
+
+    <!-- BOTONES -->
+    <div style="margin-top:20px;">
+        <a href="{% url 'citas' %}" class="btn" style="margin-right:10px;">Nueva cita</a>
+        <a href="{% url 'mis_citas' %}" class="btn">Ver mis citas</a>
+    </div>
+
 </div>
+
+<!-- WHATSAPP -->
 <a href="https://wa.me/573001112233" class="whatsapp" target="_blank">
-    <img src="img/image.png" alt="image">
+    <img src="{% static 'img/image.png' %}" alt="WhatsApp">
 </a>
+
 {% endblock %}
-
-{% block pie %}  {% endblock %}
-

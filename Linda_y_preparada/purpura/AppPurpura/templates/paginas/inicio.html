@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block titulo %} Inicio {% endblock %}
+
+{% block contenido %}
+
+<section><h2><i>¿Quiénes somos?<i></h2> <P> En Linda y Preparada Púrpura somos un equipo de estilistas profesionales, especializadas en depilación, manicure y pedicure, dedicadas a resaltar tu belleza natural y cuidar cada detalle de ti <br>
+<br>
+Trabajamos con pasión, responsabilidad y productos de calidad para que tus manos, pies y rostro luzcan impecables, elegantes y radiantes en cada compromiso, evento o momento especial de tu vida. <br>
+<br>
+Somos tus aliadas de confianza, brindándote una experiencia cómoda, segura y personalizada. A través de nuestra plataforma podrás agendar fácilmente el servicio de tu preferencia, eligiendo día, hora y tratamiento, con total libertad y confianza. <br>
+<br>
+En Linda y Preparada Púrpura no solo embellecemos, consentimos, cuidamos y realzamos tu esencia, porque creemos que cuando te sientes linda, te sientes segura y preparada para conquistar el mundo. 💅✨ <br>
+<br>
+¡Déjanos ser parte de tu rutina de belleza y vive la experiencia de sentirte única! </p></section>
+<section><h2><i>Nuestros Servicios<i></h2>
+    
+    <ol>
+        <li>
+            Maniquiur
+            <ul>
+                <br>
+                <li>Sofgel</li>
+                <li>Acrilicas</li>
+                <li>Baño en acrilico</li>
+                <li>Esmalte permanente o tradicional</li>
+                <li>Maniquiur basico de limpieza</li>
+            </ul>
+        </li>
+        <br>
+        <li>Pediquiur</li>
+        <br>
+                <li>Baño en acrilico</li>
+                <li>Esmalte permanente o tradicional</li>
+                <li>Maniquiur basico de limpieza</li>
+        <br>
+        <li>Depilación con cera </li>
+            <ul>
+                <br>
+                <li>Cejas</li>
+                <li>Bozo</li>
+                <li>Piernas</li>
+            </ul>
+            <br>
+        </li>
+        <li>Pinmentación de Cejas</li>
+    </ol>
+</section>
+
+{% endblock %}
+
+{% block pie %} {% endblock %}
+
+<script>
+
+document.addEventListener("DOMContentLoaded", ()=>{
+const nombre = localStorage.getItem("nombreUsuario");
+if(nombre){
+document.getElementById("saludoUsuario").textContent = "Hola " + nombre + ", qué gusto tenerte aquí 💜";
+}
+});
+</script>
+

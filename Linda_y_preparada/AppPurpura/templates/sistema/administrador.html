@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+
+{% block titulo %} Administrador de citas {% endblock %}
+
+{% block contenido %}
+<style>
+/* SOLO PANEL ADMIN */
+.admin-panel {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* TÍTULO */
+.admin-panel h1 {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    color: #7b4bb7;
+    margin-bottom: 30px;
+}
+/* h2*/
+/* H2 centrados con detalle */
+.admin-panel h2 {
+    text-align: center;
+    color: #7b4bb7;
+    font-weight: 600;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.admin-panel h2::after {
+    content: "";
+    width: 50px;
+    height: 3px;
+    background: #c084fc;
+    display: block;
+    margin: 8px auto 0;
+    border-radius: 5px;
+}
+/* SECCIONES */
+.admin-panel section {
+    margin-bottom: 30px;
+}
+
+/* TABLA */
+.admin-panel .table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9f4ff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(123, 75, 183, 0.2);
+}
+
+/* ENCABEZADO */
+.admin-panel .table thead {
+    background: #d8b4f8;
+}
+
+.admin-panel .table th {
+    padding: 15px;
+    text-align: center;
+    color: #4b2c73;
+    font-weight: bold;
+}
+
+/* CELDAS */
+.admin-panel .table td {
+    padding: 15px;
+    text-align: center;
+    color: #5a4a6d;
+}
+
+/* FILAS ALTERNAS */
+.admin-panel .table tbody tr:nth-child(even) {
+    background: #f3e8ff;
+}
+
+/* HOVER */
+.admin-panel .table tbody tr:hover {
+    background: #e9d5ff;
+    transition: 0.3s;
+}
+
+/* BOTONES BASE */
+.admin-panel .btn {
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin: 2px;
+    transition: 0.3s;
+}
+
+/* REPROGRAMAR */
+.admin-panel .btn-warning {
+    background: #c084fc;
+    color: white;
+    border: none;
+}
+
+.admin-panel .btn-warning:hover {
+    background: #a855f7;
+}
+
+/* CANCELAR */
+.admin-panel .btn-danger {
+    background: #f9a8d4;
+    color: white;
+    border: none;
+}
+
+.admin-panel .btn-danger:hover {
+    background: #ec4899;
+}
+
+/* MARCAR ATENDIDA */
+.admin-panel .btn-success {
+    background: #10b981;
+    color: white;
+    border: none;
+}
+
+.admin-panel .btn-success:hover {
+    background: #059669;
+}
+
+/* NO ATENDIDA */
+.admin-panel .btn-warning {
+    background: #f59e0b;
+    color: white;
+    border: none;
+}
+
+.admin-panel .btn-warning:hover {
+    background: #d97706;
+}
+
+/* MENSAJE VACÍO */
+.admin-panel td[colspan] {
+    color: #7b4bb7;
+    font-weight: bold;
+}
+</style>
+
+<div class="container py-4 admin-panel">
+    <h1 class="mb-4">Panel de administrador</h1>
+
+    {% if es_superuser %}
+    <!-- OPCIONES PARA SUPERUSER -->
+    <section class="mb-4">
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'crear_administrador' %}" class="btn btn-primary me-3">Añadir administrador</a>
+        </div>
+    </section>
+
+    <!-- FILTRO POR PROFESIONAL -->
+    <section class="mb-4">
+        <form method="get" class="d-flex justify-content-center align-items-center">
+            <label for="profesional" class="me-2" style="color: #7b4bb7; font-weight: 600;">Filtrar por profesional:</label>
+            <select name="profesional" id="profesional" class="form-select" style="max-width: 200px; margin-right: 10px;" onchange="this.form.submit()">
+                <option value="">Todas las profesionales</option>
+                {% for value, label in profesionales %}
+                <option value="{{ value }}" {% if profesional_filter == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+            {% if profesional_filter %}
+            <a href="{% url 'administrador' %}" class="btn btn-sm btn-outline-secondary">Limpiar filtro</a>
+            {% endif %}
+        </form>
+    </section>
+    {% else %}
+    <!-- PARA ADMINS STAFF -->
+    <section class="mb-4">
+        <div class="text-center">
+            <h3 style="color: #7b4bb7;">Citas de {{ user.username }}</h3>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="mb-5">
+        <h2>Citas pendientes</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Servicio</th>
+                    <th>Profesional</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas_pendientes %}
+                <tr>
+                    <td>{{ cita.usuario.username }}</td>
+                    <td>{{ cita.servicio }}</td>
+                    <td>{{ cita.profesional }}</td>
+                    <td>{{ cita.fecha|date:"d/m/Y" }}</td>
+                    <td>{{ cita.hora|time:"H:i" }}</td>
+                    <td>{{ cita.get_estado_display }}</td>
+                    <td>
+                        <a href="{% url 'marcar_atendida' cita.id %}" class="btn btn-sm btn-success">Marcar atendida</a>
+                        <a href="{% url 'marcar_no_atendida' cita.id %}" class="btn btn-sm btn-warning">No atendida</a>
+                        <a href="{% url 'reprogramar_cita' cita.id %}" class="btn btn-sm btn-warning">Reprogramar</a>
+                        <a href="{% url 'cancelar_cita' cita.id %}" class="btn btn-sm btn-danger">Cancelar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No hay citas pendientes</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section class="mb-5">
+        <h2>Citas reprogramadas</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Servicio</th>
+                    <th>Profesional</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas_reprogramadas %}
+                <tr>
+                    <td>{{ cita.usuario.username }}</td>
+                    <td>{{ cita.servicio }}</td>
+                    <td>{{ cita.profesional }}</td>
+                    <td>{{ cita.fecha|date:"d/m/Y" }}</td>
+                    <td>{{ cita.hora|time:"H:i" }}</td>
+                    <td>{{ cita.get_estado_display }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay citas reprogramadas</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Citas canceladas</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Servicio</th>
+                    <th>Profesional</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas_canceladas %}
+                <tr>
+                    <td>{{ cita.usuario.username }}</td>
+                    <td>{{ cita.servicio }}</td>
+                    <td>{{ cita.profesional }}</td>
+                    <td>{{ cita.fecha|date:"d/m/Y" }}</td>
+                    <td>{{ cita.hora|time:"H:i" }}</td>
+                    <td>{{ cita.get_estado_display }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay citas canceladas</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Citas atendidas</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Servicio</th>
+                    <th>Profesional</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas_atendidas %}
+                <tr>
+                    <td>{{ cita.usuario.username }}</td>
+                    <td>{{ cita.servicio }}</td>
+                    <td>{{ cita.profesional }}</td>
+                    <td>{{ cita.fecha|date:"d/m/Y" }}</td>
+                    <td>{{ cita.hora|time:"H:i" }}</td>
+                    <td>{{ cita.get_estado_display }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay citas atendidas</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+{% endblock %}
+
+{% block pie %} {% endblock %}

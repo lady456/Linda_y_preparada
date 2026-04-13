@@ -15,8 +15,8 @@
 
 <header style="position: relative; padding: 10px 0;">
     <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
-        <img src="{% static 'pagina/css/Purpura.png' %}" alt="Logo" style="height: 60px; width: auto;">
-        <h1 style="margin: 0; font-size: 1.8rem;">Linda y Preparada Púrpura</h1>
+        <img src="{% static 'pagina/css/Purpura.png' %}" alt="Logo" style="height: 70px; width: auto;">
+        <h1 style="margin: 0; font-size: 1.9rem;">Linda y Preparada Púrpura</h1>
     </div>
 
     <div style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); z-index: 100;">
@@ -24,7 +24,7 @@
         <li style="position: relative; display: flex; justify-content: center; align-items: center;">
             {% if user.is_authenticated %}
                 <!-- ICONO LOGUEADO: Círculo con inicial -->
-                <div onclick="toggleMenu()" style="width: 45px; height: 45px; background-color: var(--accent-vibrant); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; font-size: 1.2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); user-select: none;">
+                <div onclick="toggleMenu()" style="width: 45px; height: 45px; background-color: var(--accent-vibrant); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; font-size: 1.3rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); user-select: none;">
                     {{ user.username|first|upper }}
                 </div>
             {% else %}
@@ -39,18 +39,24 @@
             <!-- MENÚ DESPLEGABLE -->
             <div id="dropdownMenu" style="display: none; position: absolute; top: 60px; right: 10px; background-color: white; min-width: 200px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 8px; z-index: 1000; overflow: hidden; border: 1px solid #eee;">
                 <!-- Enlaces de Navegación -->
-                <a href="{% url 'inicio' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none; border-bottom: 1px solid #eee;">Inicio</a>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'citas' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none; border-bottom: 1px solid #eee;">Citas</a>
-                {% else %}
-                    <a href="{% url 'login' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none; border-bottom: 1px solid #eee;">Citas</a>
-                {% endif %}
-
+                
                 {% if user.is_authenticated %}
                     <div style="padding: 10px; border-bottom: 1px solid #eee; text-align: center; color: var(--text-dark); background-color: #f9f9f9; font-size: 0.9rem;">
                         Hola, <strong>{{ user.username }}</strong>
                     </div>
-                    <a href="{% url 'mis_citas' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none;">Mis Citas</a>
+                    
+                <a href="{% url 'inicio' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none; border-bottom: 1px solid #eee;">Inicio</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'citas' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none; border-bottom: 1px solid #eee;">Agendar Cita</a>
+                {% else %}
+                    <a href="{% url 'login' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none; border-bottom: 1px solid #eee;">Agendar Cita</a>
+                {% endif %}
+
+                    <a href="{% url 'mis_citas' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none; border-bottom: 1px solid #eee;">Mis Citas</a>
+                    
+                    {% if user.is_superuser or user.is_staff %}
+                    <a href="{% url 'administrador' %}" style="display: block; padding: 10px 15px; color: var(--accent-vibrant); text-decoration: none; font-weight: 600; border-bottom: 1px solid #eee;">Administrador</a>
+                    {% endif %}
                     
                     <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
                         {% csrf_token %}
@@ -61,7 +67,8 @@
                 {% endif %}
             </div>
         </li>
-</div></header>
+    </div>
+</header>
 <script>
     function toggleMenu() {
         var menu = document.getElementById("dropdownMenu");
@@ -75,6 +82,15 @@
         }
     }
 </script>
+{% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert" style="border-radius: 12px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
 {% block contenido %}
 
 {% endblock %}

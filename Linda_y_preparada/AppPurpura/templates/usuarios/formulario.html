@@ -1,34 +1,164 @@
-{% csrf_token %}
-
 {% extends "base.html" %}
 
 {% block titulo %} Formulario de Registro {% endblock %}
 
-
 {% block contenido %}
 
-{% for campo in formulario %}
-<div class="card">
-    <h2 style="text-align: center; margin-bottom: 20px;">Crear una Cuenta</h2>
-        <div class="mb-3">
-            <label for="" class="form-label">Name</label>
-            <input
-                type="text"
-                name=""
-                id=""
-                class="form-control"
-                placeholder=""
-                aria-describedby="helpId"
-            />
-        </div>
+<style>
+/* CONTENEDOR SOLO REGISTRO */
+.registro-panel {
+    max-width: 500px;
+    margin: 60px auto;
+    font-family: 'Segoe UI', sans-serif;
+}
 
-        {% endfor %}
+/* TARJETA */
+.registro-panel .card {
+    padding: 30px;
+    border-radius: 20px;
+    border: none;
+    background: #f9f4ff;
+    box-shadow: 0 10px 30px rgba(123, 75, 183, 0.2);
+}
 
-        
-        <button type="submit" class="mt-3" href="{% url 'verificacion' %}" role="button">Registrarse</button>
-        <a class="btn btn-light w-100 mt-2" href="{% url 'inicio' %}" role="button">Cancelar</a>
+/* TÍTULO */
+.registro-panel h2 {
+    text-align: center;
+    color: #7b4bb7;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* LABELS */
+.registro-panel label {
+    color: #5a4a6d;
+    font-weight: 500;
+}
+
+/* INPUTS */
+.registro-panel input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #d8b4f8;
+    margin-top: 5px;
+}
+
+/* EFECTO FOCUS */
+.registro-panel input:focus {
+    outline: none;
+    border-color: #a855f7;
+    box-shadow: 0 0 5px rgba(168, 85, 247, 0.4);
+}
+
+/* BOTÓN REGISTRARSE */
+.registro-panel button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: #c084fc;
+    color: white;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.registro-panel button:hover {
+    background: #a855f7;
+}
+
+/* BOTÓN CANCELAR */
+.registro-panel .btn-light {
+    background: #e9d5ff;
+    border-radius: 10px;
+    color: #5a4a6d;
+}
+
+.registro-panel .btn-light:hover {
+    background: #d8b4f8;
+}
+
+/* ERRORES */
+.registro-panel .text-danger {
+    margin-top: 5px;
+}
+
+/* CHECKBOX VERIFICACIÓN */
+.registro-panel .checkbox-verificacion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.registro-panel .checkbox-verificacion input[type="checkbox"] {
+    width: auto;
+    margin-top: 0;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.registro-panel .checkbox-verificacion label {
+    margin: 0;
+    cursor: pointer;
+    flex: 1;
+}
+</style>
+
+<div class="container registro-panel">
+    <div class="card">
+        <h2>Crear una Cuenta</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for campo in form %}
+                {% if campo.field.widget.input_type == 'checkbox' %}
+                    <!-- Checkbox especial para verificación -->
+                    <div class="mb-3">
+                        <div class="checkbox-verificacion">
+                            {{ campo }}
+                            <label for="{{ campo.id_for_label }}" class="form-label">
+                                {{ campo.label }}
+                            </label>
+                        </div>
+                        {% if campo.errors %}
+                            <div class="text-danger small" style="margin-top: 8px;">
+                                {{ campo.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <!-- Campos de texto normales -->
+                    <div class="mb-3">
+                        <label for="{{ campo.id_for_label }}" class="form-label">
+                            {{ campo.label }}
+                        </label>
+
+                        {{ campo }}
+
+                        {% if campo.errors %}
+                            <div class="text-danger small">
+                                {{ campo.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <button type="submit" class="mt-3">
+                Registrarse
+            </button>
+
+            <a class="btn btn-light w-100 mt-2" href="{% url 'inicio' %}">
+                Cancelar
+            </a>
+        </form>
+    </div>
 </div>
 
 {% endblock %}
 
-{% block pie %} {% endblock %}
+{% block pie %}{% endblock %}

@@ -1,0 +1,285 @@
+:root {
+    --bg-color: #E6E6FA; /* Morado claro (Lavender) */
+    --primary-pastel: #d8b4fe; /* Un morado pastel medio */
+    --accent-vibrant: #a855f7; /* Un morado más vibrante para acentos */
+    --text-dark: #581c87; /* Un morado oscuro para texto, más suave que el negro */
+    --white: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.08);
+    --gradient-start: #c084fc;
+    --gradient-end: #9333ea;
+}
+
+body{ 
+    font-family: Arial; 
+    background: var(--bg-color);
+    margin: 0;
+    padding:0px;
+}
+
+nav {
+    padding: auto;
+}
+
+header{ 
+    background: var(--primary-pastel);
+    color: var(--text-dark);
+    padding:5px 0px;   
+    padding: 10px;
+    text-align:center; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+section{
+    padding:20px;
+}
+
+h2 { 
+    color: var(--text-dark);
+}
+
+img.logo{ 
+    width: 250px; 
+    display:block;
+    margin:20px auto; 
+}
+
+footer{ 
+    background: var(--primary-pastel); 
+    color: var(--text-dark); 
+    text-align:center; 
+    padding:10px;
+}
+
+label{ 
+    font-weight:bold;
+    color: var(--text-dark);
+}
+
+select,input{ 
+    width:100%; 
+    padding:8px; 
+    margin-bottom:12px;
+    border: 1px solid #fcb6b6;
+    border-radius: 6px;
+}
+nav {
+            background-color: #ffffff;
+        }
+
+        /* Lista */
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Esto la pone horizontal */
+        }
+
+        /* Elementos */
+        nav ul li {
+            flex: 1;
+        }
+
+        /* Enlaces */
+        nav ul li a {
+            display: block;
+            padding: 15px;
+            text-align: center;
+            color: rgb(157, 31, 168);
+            text-decoration: none;
+        }
+
+        /* Efecto hover */
+        nav ul li a:hover {
+            background-color: #fc5bee;
+        }
+
+.card{ 
+    background: var(--white); 
+    max-width:500px; 
+    margin:40px auto; 
+    padding:30px; 
+    border-radius:12px; 
+    box-shadow: 0 10px 25px var(--card-shadow);
+}
+
+button{ 
+    background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end)); 
+    color: var(--white); 
+    padding:12px; 
+    width:100%; 
+    border:none; 
+    border-radius:8px; 
+    font-size:16px; 
+    cursor:pointer; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover{ 
+    transform: translateY(-3px); 
+    box-shadow: 0 10px 20px rgba(147, 51, 234, 0.25);
+}
+
+.mensajeCorreo{ 
+    margin-top: 20px; 
+    background: #e9d5ff; 
+    padding:10px; 
+    border-radius:8px; 
+    text-align:center; 
+    color: var(--text-dark); 
+    font-weight:bold;
+}
+
+img{
+    width:40px;
+}
+
+img.spa {
+    width: 400px; 
+    display:block;
+    margin:30px auto; 
+}
+.login-btn{
+    background: var(--white);
+    color: var(--accent-vibrant) !important;
+    padding:8px 14px;
+    border-radius:20px;
+    font-weight:bold;
+    text-decoration:none;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover{
+    background: var(--bg-color);
+    transform: translateY(-2px);
+}
+.whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.whatsapp:hover {
+    transform: scale(1.1);
+}
+
+.whatsapp img {
+    width: 35px;
+    height: 35px;
+}
+.login-bts {
+    background: transparent;
+    color: var(--white) !important;
+    padding: 7px 13px;
+    border-radius:20px;
+    border: 1px solid var(--white);
+    font-weight:bold;
+    text-decoration:none;
+    transition: all 0.3s ease;
+}
+.login-bts:hover {
+    background: var(--white);
+    color: var(--accent-vibrant) !important;
+}
+ 
+.h2l{
+    color: var(--white);
+}
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #7b4bb7;
+    margin-bottom: 30px;
+}
+
+/* Tabla */
+.citas-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9f4ff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(32, 31, 31, 0.2);
+}
+
+/* Encabezado */
+.citas-table thead {
+    background: #d8b4f8;
+}
+
+.citas-table th {
+    padding: 15px;
+    text-align: center;
+    color: #4b2c73;
+    font-weight: bold;
+}
+
+/* Filas */
+.citas-table td {
+    padding: 15px;
+    text-align: center;
+    color: #5a4a6d;
+}
+
+/* Alternar colores */
+.citas-table tbody tr:nth-child(even) {
+    background: #f3e8ff;
+}
+
+/* Hover bonito */
+.citas-table tbody tr:hover {
+    background: #e9d5ff;
+    transition: 0.3s;
+}
+
+/* Botones */
+.btn {
+    padding: 8px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    margin: 2px;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+/* Botón reprogramar */
+.btn-reprogramar {
+    background: #c084fc;
+    color: white;
+}
+
+.btn-reprogramar:hover {
+    background: #a855f7;
+}
+
+/* Botón cancelar */
+.btn-cancelar {
+    background: #f9a8d4;
+    color: white;
+}
+
+.btn-cancelar:hover {
+    background: #ec4899;
+}
+
+/* Mensaje sin citas */
+td[colspan="5"] {
+    color: #7b4bb7;
+    font-weight: bold;
+}

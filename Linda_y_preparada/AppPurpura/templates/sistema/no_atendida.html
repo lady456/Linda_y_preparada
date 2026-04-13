@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block titulo %}Marcar cita como no atendida{% endblock %}
+
+{% block contenido %}
+<style>
+    .no-atendida-panel {
+        max-width: 600px;
+        margin: 60px auto;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .no-atendida-panel .card {
+        padding: 30px;
+        border-radius: 20px;
+        border: none;
+        background: #f9f4ff;
+        box-shadow: 0 10px 30px rgba(123, 75, 183, 0.2);
+    }
+
+    .no-atendida-panel h2 {
+        text-align: center;
+        color: #7b4bb7;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .no-atendida-panel .cita-info {
+        background: #e9d5ff;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .no-atendida-panel label {
+        color: #5a4a6d;
+        font-weight: 500;
+    }
+
+    .no-atendida-panel textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #d8b4f8;
+        margin-top: 5px;
+        resize: vertical;
+    }
+
+    .no-atendida-panel button {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        background: #c084fc;
+        color: white;
+        font-weight: 600;
+        transition: 0.3s;
+        margin-top: 15px;
+    }
+
+    .no-atendida-panel button:hover {
+        background: #a855f7;
+    }
+
+    .no-atendida-panel .btn-secondary {
+        background: #6b7280;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container no-atendida-panel">
+    <div class="card">
+        <h2>Marcar cita como no atendida</h2>
+
+        <div class="cita-info">
+            <strong>Cita:</strong> {{ cita.usuario.username }} - {{ cita.servicio }}<br>
+            <strong>Profesional:</strong> {{ cita.profesional }}<br>
+            <strong>Fecha:</strong> {{ cita.fecha|date:"d/m/Y" }}<br>
+            <strong>Hora:</strong> {{ cita.hora|time:"H:i" }}
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.descripcion.id_for_label }}">{{ form.descripcion.label }}</label>
+                {{ form.descripcion }}
+                {% for error in form.descripcion.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <button type="submit">Marcar como no atendida</button>
+            <a href="{% url 'administrador' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
