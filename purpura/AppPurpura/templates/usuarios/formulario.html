@@ -82,6 +82,29 @@
 .registro-panel .text-danger {
     margin-top: 5px;
 }
+
+/* CHECKBOX VERIFICACIÓN */
+.registro-panel .checkbox-verificacion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.registro-panel .checkbox-verificacion input[type="checkbox"] {
+    width: auto;
+    margin-top: 0;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.registro-panel .checkbox-verificacion label {
+    margin: 0;
+    cursor: pointer;
+    flex: 1;
+}
 </style>
 
 <div class="container registro-panel">
@@ -92,19 +115,37 @@
             {% csrf_token %}
 
             {% for campo in form %}
-                <div class="mb-3">
-                    <label for="{{ campo.id_for_label }}" class="form-label">
-                        {{ campo.label }}
-                    </label>
-
-                    {{ campo }}
-
-                    {% if campo.errors %}
-                        <div class="text-danger small">
-                            {{ campo.errors }}
+                {% if campo.field.widget.input_type == 'checkbox' %}
+                    <!-- Checkbox especial para verificación -->
+                    <div class="mb-3">
+                        <div class="checkbox-verificacion">
+                            {{ campo }}
+                            <label for="{{ campo.id_for_label }}" class="form-label">
+                                {{ campo.label }}
+                            </label>
                         </div>
-                    {% endif %}
-                </div>
+                        {% if campo.errors %}
+                            <div class="text-danger small" style="margin-top: 8px;">
+                                {{ campo.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <!-- Campos de texto normales -->
+                    <div class="mb-3">
+                        <label for="{{ campo.id_for_label }}" class="form-label">
+                            {{ campo.label }}
+                        </label>
+
+                        {{ campo }}
+
+                        {% if campo.errors %}
+                            <div class="text-danger small">
+                                {{ campo.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
             {% endfor %}
 
             <button type="submit" class="mt-3">

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block titulo %} Registro {% endblock %}
+
+
+{% block contenido %}
+
+<h1>Registrese aquí</h1>
+<div class="card">
+    <div class="card-header">Registro de Usuario</div>               
+    <div class="card-body">
+        <h4 class="card-title">Ingrese sus datos</h4>
+        <p class="card-text">Estos son los datos</p>
+        {% include 'usuarios/formulario.html' %}
+    </div>
+
+
+
+{% endblock %}
+
+{% block pie %} {% endblock %}

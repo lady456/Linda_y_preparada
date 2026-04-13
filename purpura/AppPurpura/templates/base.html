@@ -52,7 +52,11 @@
                     <a href="{% url 'login' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none; border-bottom: 1px solid #eee;">Agendar Cita</a>
                 {% endif %}
 
-                    <a href="{% url 'mis_citas' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none;">Mis Citas</a>
+                    <a href="{% url 'mis_citas' %}" style="display: block; padding: 10px 15px; color: var(--text-dark); text-decoration: none; border-bottom: 1px solid #eee;">Mis Citas</a>
+                    
+                    {% if user.is_superuser or user.is_staff %}
+                    <a href="{% url 'administrador' %}" style="display: block; padding: 10px 15px; color: var(--accent-vibrant); text-decoration: none; font-weight: 600; border-bottom: 1px solid #eee;">Administrador</a>
+                    {% endif %}
                     
                     <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
                         {% csrf_token %}
